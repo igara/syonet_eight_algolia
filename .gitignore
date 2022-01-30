@@ -1,5 +1,5 @@
 .env.development
 .env.production
-.webpack
+.esbuild
 .serverless
 node_modules

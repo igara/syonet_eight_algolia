@@ -20,14 +20,15 @@ functions:
 plugins:
   - serverless-offline
   - serverless-offline-scheduler
-  - serverless-webpack
+  - serverless-esbuild
   - serverless-dotenv-plugin
 
 custom:
   dotenv:
     path: .env.${self:provider.stage}
-  webpack:
-    webpackConfig: 'webpack.serverless.config.js'
+  esbuild:
+    bundle: true
+    minify: true
   serverless-offline:
     useChildProcesses: true
     allowCache: true
