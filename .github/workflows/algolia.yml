@@ -1,4 +1,4 @@
-name: ogp
+name: algolia
 
 on:
   push:
