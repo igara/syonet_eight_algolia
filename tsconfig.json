@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@algolia/*": ["./*"]
+    }
+  },
+  "include": ["../../types/**.ts", "src/*"]
+}

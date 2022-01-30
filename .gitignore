@@ -1,2 +1,5 @@
 .env.development
 .env.production
+.webpack
+.serverless
+node_modules

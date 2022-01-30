@@ -1,0 +1,33 @@
+service: syonet-algolia
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  memorySize: 128
+  region: us-east-1
+  stage: ${opt:stage, 'development'}
+
+functions:
+  www_page:
+    handler: src/www_page.handler
+    timeout: 900
+    events:
+      - schedule: cron(0 21 * * ? *) # UTC時間設定のため、-9時間
+      # - schedule: rate(1 minute) # development実行用
+    architecture: arm64
+
+plugins:
+  - serverless-offline
+  - serverless-offline-scheduler
+  - serverless-webpack
+  - serverless-dotenv-plugin
+
+custom:
+  dotenv:
+    path: .env.${self:provider.stage}
+  webpack:
+    webpackConfig: 'webpack.serverless.config.js'
+  serverless-offline:
+    useChildProcesses: true
+    allowCache: true
