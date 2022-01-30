@@ -10,7 +10,7 @@ provider:
 
 functions:
   www_page:
-    handler: src/www_page.handler
+    handler: src/functions/www_page.handler
     timeout: 900
     events:
       - schedule: cron(0 21 * * ? *) # UTC時間設定のため、-9時間
