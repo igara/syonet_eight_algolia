@@ -23,7 +23,10 @@ export const handler: Handler = async (_event, _context, callback) => {
           qiitaPostTitle: qiitaListJSON[0].name,
         }),
       })
-      .promise();
+      .promise()
+      .catch((e) => {
+        console.error(e);
+      });
 
     // qiitaListJSON.forEach((qiitaList) => {
     //   lambda

@@ -16,7 +16,10 @@ export const handler: Handler = (_event, _context, callback) => {
         InvocationType: 'Event',
         Payload: JSON.stringify({}),
       })
-      .promise();
+      .promise()
+      .catch((e) => {
+        console.error(e);
+      });
   } catch (e) {
     callback(new Error(e));
   }

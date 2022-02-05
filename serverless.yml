@@ -8,6 +8,13 @@ provider:
   region: us-east-1
   stage: ${opt:stage, 'development'}
 
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource:
+        - '*'
+
 functions:
   www_page:
     handler: src/functions/www_page/index.handler
