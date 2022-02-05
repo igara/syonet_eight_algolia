@@ -1,4 +1,4 @@
-import { handler } from '../../www_page';
+import { handler } from '../../index';
 
 describe('handler', () => {
   beforeEach(() => {
