@@ -4,6 +4,7 @@ import * as Variables from 'syonet_eight_variables';
 import fetch from 'node-fetch';
 import { validation } from '../../validation';
 import algoliasearch from 'algoliasearch';
+import { createHmac } from 'crypto';
 
 const lambda = new AWS.Lambda({
   endpoint: process.env.ALGOLIA_LAMBDA_ENDPOINT,
@@ -17,19 +18,35 @@ export const handler: Handler = async (event, _context, callback) => {
       throw new Error('require: payload qiitaPostTitle');
     }
 
-    // const algolia = algoliasearch(
-    //   process.env.ALGOLIA_APPLICATION_ID,
-    //   process.env.ALGOLIA_ADMIN_API_KEY,
-    // );
-
-    // const algoliaIndex = algolia.initIndex(process.env.ALGOLIA_WWW_PAGE_INDEX);
+    const qiitaPostTitle = event.qiitaPostTitle;
 
     const qiitaDetailResponse = await fetch(
-      Variables.backupQiitaDetailURI(event.qiitaPostTitle),
+      Variables.backupQiitaDetailURI(qiitaPostTitle),
     );
     const qiitaDetail = await qiitaDetailResponse.text();
 
-    // console.log(qiitaDetail);
+    const url = `${process.env.HTTP_WWW_HOST}/blogs/qiita/${qiitaPostTitle}`;
+    const content = qiitaDetail
+      .replace(/\n/g, '')
+      .replace(/<style>.+<\/style>/g, '')
+      .replace(/<(".*?"|'.*?'|[^'"])*?>/g, '');
+
+    const algolia = algoliasearch(
+      process.env.ALGOLIA_APPLICATION_ID,
+      process.env.ALGOLIA_ADMIN_API_KEY,
+    );
+
+    const algoliaIndex = algolia.initIndex(process.env.ALGOLIA_WWW_PAGE_INDEX);
+    await algoliaIndex.saveObject(
+      {
+        objectID: createHmac('sha256', '').update(url).digest('hex').toString(),
+        url,
+        title: qiitaPostTitle,
+        description: content.slice(0, 90),
+        content: content,
+      },
+      { autoGenerateObjectIDIfNotExist: true },
+    );
   } catch (e) {
     console.error(e);
     callback(new Error(e));
