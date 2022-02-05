@@ -21,8 +21,11 @@ export const handler: Handler = (_event, _context, callback) => {
         console.error(e);
       });
   } catch (e) {
+    console.error(e);
     callback(new Error(e));
   }
 
-  callback(null, `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating...`);
+  const infoLog = `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating...`;
+  console.info(infoLog);
+  callback(null, infoLog);
 };

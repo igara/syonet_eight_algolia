@@ -40,11 +40,11 @@ export const handler: Handler = async (_event, _context, callback) => {
     //     .promise();
     // });
   } catch (e) {
+    console.error(e);
     callback(new Error(e));
   }
 
-  callback(
-    null,
-    `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating blog_qiita_list...`,
-  );
+  const infoLog = `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating blog_qiita_list...`;
+  console.info(infoLog);
+  callback(null, infoLog);
 };

@@ -31,11 +31,11 @@ export const handler: Handler = async (event, _context, callback) => {
 
     // console.log(qiitaDetail);
   } catch (e) {
+    console.error(e);
     callback(new Error(e));
   }
 
-  callback(
-    null,
-    `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating blog_qiita_detail ${event.qiitaPostTitle}...`,
-  );
+  const infoLog = `algolia ${process.env.ALGOLIA_WWW_PAGE_INDEX} index: updating blog_qiita_detail ${event.qiitaPostTitle}...`;
+  console.info(infoLog);
+  callback(null, infoLog);
 };
