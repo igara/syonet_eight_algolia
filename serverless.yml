@@ -20,7 +20,7 @@ functions:
     handler: src/functions/www_page/index.handler
     timeout: 900
     # events:
-    #   - schedule: cron(0 21 * * ? *) # UTC時間設定のため、-9時間
+    #   - scheduler: cron(0 21 * * ? *) # UTC時間設定のため、-9時間
     architecture: arm64
   www_page_blogs_qiita_list:
     handler: src/functions/www_page/blogs/qiita/list.handler

@@ -25,7 +25,8 @@ export const handler: Handler = async (event, _context, callback) => {
     );
     const qiitaDetail = await qiitaDetailResponse.text();
 
-    const url = `${process.env.HTTP_WWW_HOST}/blogs/qiita/${qiitaPostTitle}`;
+    const nextLink = `/blogs/qiita/${qiitaPostTitle}`;
+    const url = `${process.env.HTTP_WWW_HOST}${nextLink}`;
     const content = qiitaDetail
       .replace(/\n/g, '')
       .replace(/<style>.+<\/style>/g, '')
@@ -44,6 +45,7 @@ export const handler: Handler = async (event, _context, callback) => {
         title: qiitaPostTitle,
         description: content.slice(0, 90),
         content: content,
+        nextLink,
       },
       { autoGenerateObjectIDIfNotExist: true },
     );

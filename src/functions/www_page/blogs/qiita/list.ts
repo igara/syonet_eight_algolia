@@ -15,30 +15,17 @@ export const handler: Handler = async (_event, _context, callback) => {
     const qiitaListResponse = await fetch(Variables.backupQiitaListURI);
     const qiitaListJSON = (await qiitaListResponse.json()) as Variables.BackupQiitaList;
 
-    lambda
-      .invoke({
-        FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_qiita_detail`,
-        InvocationType: 'Event',
-        Payload: JSON.stringify({
-          qiitaPostTitle: qiitaListJSON[0].name,
-        }),
-      })
-      .promise()
-      .catch((e) => {
-        console.error(e);
-      });
-
-    // qiitaListJSON.forEach((qiitaList) => {
-    //   lambda
-    //     .invoke({
-    //       FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blog_qiita_details`,
-    //       InvocationType: 'Event',
-    //       Payload: JSON.stringify({
-    //         qiitaPostTitle: qiitaList.name,
-    //       }),
-    //     })
-    //     .promise();
-    // });
+    qiitaListJSON.forEach((qiitaList) => {
+      lambda
+        .invoke({
+          FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_qiita_detail`,
+          InvocationType: 'Event',
+          Payload: JSON.stringify({
+            qiitaPostTitle: qiitaList.name,
+          }),
+        })
+        .promise();
+    });
   } catch (e) {
     console.error(e);
     callback(new Error(e));
