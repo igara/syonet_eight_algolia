@@ -27,6 +27,7 @@ export const handler: Handler = async (event, _context, callback) => {
 
     const nextLink = `/blogs/qiita/${qiitaPostTitle}`;
     const url = `${process.env.HTTP_WWW_HOST}${nextLink}`;
+    const ogp = `${process.env.HTTP_OGP_HOST}/api/www?path=${nextLink}&width=630&height=630`;
     const content = qiitaDetail
       .replace(/\n/g, '')
       .replace(/<style>.+<\/style>/g, '')
@@ -38,14 +39,19 @@ export const handler: Handler = async (event, _context, callback) => {
     );
 
     const algoliaIndex = algolia.initIndex(process.env.ALGOLIA_WWW_PAGE_INDEX);
+    await algoliaIndex.setSettings({
+      attributesForFaceting: ['tags'],
+    });
     await algoliaIndex.saveObject(
       {
         objectID: createHmac('sha256', '').update(url).digest('hex').toString(),
         url,
+        ogp,
         title: qiitaPostTitle,
         description: content.slice(0, 90),
         content: content,
         nextLink,
+        tags: ['blog', 'qiita'],
       },
       { autoGenerateObjectIDIfNotExist: true },
     );
