@@ -1,5 +1,8 @@
 service: syonet-algolia
 
+frameworkVersion: '3'
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs14.x
@@ -7,13 +10,20 @@ provider:
   memorySize: 128
   region: us-east-1
   stage: ${opt:stage, 'development'}
-
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
         - 'lambda:InvokeFunction'
       Resource:
         - '*'
+  environment:
+    ALGOLIA_APPLICATION_ID: ${env:ALGOLIA_APPLICATION_ID}
+    ALGOLIA_ADMIN_API_KEY: ${env:ALGOLIA_ADMIN_API_KEY}
+    ALGOLIA_WWW_PAGE_INDEX: ${env:ALGOLIA_WWW_PAGE_INDEX}
+    ENV: ${env:ENV}
+    ALGOLIA_LAMBDA_ENDPOINT: ${env:ALGOLIA_LAMBDA_ENDPOINT}
+    HTTP_WWW_HOST: ${env:HTTP_WWW_HOST}
+    HTTP_OGP_HOST: ${env:HTTP_OGP_HOST}
 
 functions:
   www_page:
@@ -42,11 +52,8 @@ functions:
 plugins:
   - serverless-offline
   - serverless-esbuild
-  - serverless-dotenv-plugin
 
 custom:
-  dotenv:
-    path: .env.${self:provider.stage}
   esbuild:
     bundle: true
     minify: true
