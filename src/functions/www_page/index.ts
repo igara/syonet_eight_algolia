@@ -31,6 +31,17 @@ export const handler: Handler = (_event, _context, callback) => {
       .catch((e) => {
         console.error(e);
       });
+
+    lambda
+      .invoke({
+        FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_zenn_article_list`,
+        InvocationType: 'Event',
+        Payload: JSON.stringify({}),
+      })
+      .promise()
+      .catch((e) => {
+        console.error(e);
+      });
   } catch (e) {
     console.error(e);
     callback(new Error(e));
