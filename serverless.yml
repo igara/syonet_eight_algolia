@@ -48,6 +48,14 @@ functions:
     handler: src/functions/www_page/blogs/hatena/detail.handler
     timeout: 900
     architecture: arm64
+  www_page_blogs_zenn_article_list:
+    handler: src/functions/www_page/blogs/zenn/article/list.handler
+    timeout: 900
+    architecture: arm64
+  www_page_blogs_zenn_article_detail:
+    handler: src/functions/www_page/blogs/zenn/article/detail.handler
+    timeout: 900
+    architecture: arm64
 
 plugins:
   - serverless-offline
