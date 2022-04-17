@@ -68,3 +68,6 @@ custom:
   serverless-offline:
     useChildProcesses: false
     allowCache: true
+    httpPort: 4003
+    websocketPort: 4004
+    lambdaPort: 4005
