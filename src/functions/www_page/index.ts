@@ -12,7 +12,7 @@ export const handler: Handler = (_event, _context, callback) => {
 
     lambda
       .invoke({
-        FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_qiita_list`,
+        FunctionName: `syonet-algolia-production-www_page_blogs_qiita_list`,
         InvocationType: 'Event',
         Payload: JSON.stringify({}),
       })
@@ -23,7 +23,7 @@ export const handler: Handler = (_event, _context, callback) => {
 
     lambda
       .invoke({
-        FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_hatena_list`,
+        FunctionName: `syonet-algolia-production-www_page_blogs_hatena_list`,
         InvocationType: 'Event',
         Payload: JSON.stringify({}),
       })
@@ -34,7 +34,7 @@ export const handler: Handler = (_event, _context, callback) => {
 
     lambda
       .invoke({
-        FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_zenn_article_list`,
+        FunctionName: `syonet-algolia-production-www_page_blogs_zenn_article_list`,
         InvocationType: 'Event',
         Payload: JSON.stringify({}),
       })

@@ -19,7 +19,7 @@ export const handler: Handler = async (_event, _context, callback) => {
     zennListJSON.forEach((zennList) => {
       lambda
         .invoke({
-          FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_zenn_article_detail`,
+          FunctionName: `syonet-algolia-production-www_page_blogs_zenn_article_detail`,
           InvocationType: 'Event',
           Payload: JSON.stringify({
             zennMarkdownName: zennList.name,

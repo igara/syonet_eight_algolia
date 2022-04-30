@@ -18,7 +18,7 @@ export const handler: Handler = async (_event, _context, callback) => {
     qiitaListJSON.forEach((qiitaList) => {
       lambda
         .invoke({
-          FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_qiita_detail`,
+          FunctionName: `syonet-algolia-production-www_page_blogs_qiita_detail`,
           InvocationType: 'Event',
           Payload: JSON.stringify({
             qiitaPostTitle: qiitaList.name,

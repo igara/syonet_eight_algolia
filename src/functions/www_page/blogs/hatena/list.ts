@@ -19,7 +19,7 @@ export const handler: Handler = async (_event, _context, callback) => {
     hatenaListJSON.forEach((hatenaList) => {
       lambda
         .invoke({
-          FunctionName: `syonet-algolia-${process.env.ENV}-www_page_blogs_hatena_detail`,
+          FunctionName: `syonet-algolia-production-www_page_blogs_hatena_detail`,
           InvocationType: 'Event',
           Payload: JSON.stringify({
             hatenaPostTitle: hatenaList.name,
